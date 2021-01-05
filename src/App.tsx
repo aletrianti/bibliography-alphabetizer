@@ -1,26 +1,77 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Input from "./components/Input/Input";
+import Button from "./components/Button/Button";
+import List from "./components/List/List";
+import { connect } from "react-redux";
+import { IItems, IOrderedItems } from "./store/interfaces/items.interfaces";
+import { StoreOrderedItemsAction } from "./store/actions/items.actions";
+
+interface AppProps {
+    items: IItems;
+    orderedItems: IOrderedItems;
+    storeOrderedItems: (items: IOrderedItems) => any;
 }
 
-export default App;
+class App extends React.Component<AppProps> {
+    orderList = (): void => {
+        const { items } = this.props.items;
+        const itemsCopy = [...items];
+        const ordered = itemsCopy.sort((prev, next) =>
+            prev.item.localeCompare(next.item)
+        );
+
+        console.log(ordered);
+
+        this.props.storeOrderedItems({ items: ordered });
+    };
+
+    clearList = (): void => {
+        window.location.reload();
+    };
+
+    render() {
+        return (
+            <div className="App">
+                <h1 id="app__header">Bibliography Alphabetizer</h1>
+                <div id="app__content__container">
+                    <div id="app__content--left">
+                        <Input />
+                        <List isOrderedList={false} />
+                        <div id="app__content__btns">
+                            <Button
+                                isInputButton={false}
+                                isResetButton={true}
+                                onclickfunction={this.clearList}
+                            />
+                            <Button
+                                isInputButton={false}
+                                onclickfunction={this.orderList}
+                            />
+                        </div>
+                    </div>
+                    <div id="app__content--right">
+                        <List isOrderedList={true} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = (state: any) => {
+    return {
+        items: state.items,
+        orderedItems: state.orderedItems,
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        storeOrderedItems: (items: IOrderedItems) =>
+            dispatch(StoreOrderedItemsAction(items)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,0 +1,28 @@
+#input__form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+}
+
+#input__container {
+    display: flex;
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#input__label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#input__input {
+    margin-right: 10px;
+    padding: 10px 15px;
+    border: 1px solid #011117;
+    border-radius: 20px;
+    outline: none;
+    width: 100%;
+}

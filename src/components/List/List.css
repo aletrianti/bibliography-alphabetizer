@@ -1,0 +1,32 @@
+.list {
+    display: flex;
+    padding: 15px 10px;
+    border: 1px solid #011117;
+    border-radius: 20px;
+    outline: none;
+    width: 25em;
+    height: 15em;
+    max-height: 15em;
+    overflow: hidden;
+}
+
+.list ul {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.list li {
+    text-align: left;
+}
+
+.list--ordered {
+    margin-top: 34px;
+}
+
+@media all and (max-width: 1035px) {
+    .list--ordered {
+        margin-top: 0;
+    }
+}
