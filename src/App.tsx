@@ -18,11 +18,15 @@ class App extends React.Component<AppProps> {
     orderList = (): void => {
         const { items } = this.props.items;
         const itemsCopy = [...items];
-        const ordered = itemsCopy.sort((prev, next) =>
-            prev.item.localeCompare(next.item)
-        );
 
-        console.log(ordered);
+        const ordered = itemsCopy.sort((prev: any, next: any) => {
+            const prevItem = prev.item.toLowerCase();
+            const nextItem = next.item.toLowerCase();
+
+            if (prevItem > nextItem) return 1;
+            if (prevItem < nextItem) return -1;
+            return 0;
+        });
 
         this.props.storeOrderedItems({ items: ordered });
     };
